@@ -1,61 +1,67 @@
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.Scanner;
 
 /**
- * UC5: Stack-Based Palindrome Checker
- * Goal: Use stack to reverse characters and validate palindrome
+ * UC6: Queue + Stack Based Palindrome Checker
+ * Goal: Demonstrate FIFO vs LIFO using Queue and Stack
  */
 public class PalindromeCheckerApp {
 
     /**
-     * Method to check whether a string is palindrome using Stack
+     * Method to check palindrome using Queue and Stack
      * @param input user entered string
      * @return result message
      */
     public static String checkPalindrome(String input) {
 
-        // Create Stack
+        // Create Queue (FIFO) and Stack (LIFO)
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Convert string to lowercase (optional for case-insensitive check)
-        String original = input.toLowerCase();
+        // Convert to lowercase for case-insensitive comparison
+        String text = input.toLowerCase();
 
-        // PUSH: insert characters into stack
-        for (int i = 0; i < original.length(); i++) {
-            stack.push(original.charAt(i));
+        // Enqueue and Push characters
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            queue.add(ch);   // ENQUEUE (FIFO)
+            stack.push(ch);  // PUSH (LIFO)
         }
 
-        // POP and compare
-        String reversed = "";
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
 
-        while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+            char fromQueue = queue.remove(); // DEQUEUE
+            char fromStack = stack.pop();    // POP
+
+            // If mismatch → not palindrome
+            if (fromQueue != fromStack) {
+                return "Result: The given string is NOT a palindrome.";
+            }
         }
 
-        // Validate palindrome
-        if (original.equals(reversed)) {
-            return "Result: The given string is a PALINDROME.";
-        } else {
-            return "Result: The given string is NOT a palindrome.";
-        }
+        // All characters matched
+        return "Result: The given string is a PALINDROME.";
     }
 
     /**
-     * Main method
+     * Main Method
      */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== UC5: Stack-Based Palindrome Checker ===");
+        System.out.println("=== UC6: Queue + Stack Based Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String input = sc.nextLine();
 
-        // Call palindrome checker
+        // Call checker
         String result = checkPalindrome(input);
 
-        // Print result
+        // Display result
         System.out.println(result);
 
         sc.close();
