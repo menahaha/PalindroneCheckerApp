@@ -1,35 +1,49 @@
 /**
- * UC3: Palindrome Check Using String Reverse
+ * UC4: Character Array Based Palindrome Check
  * Palindrome Checker App
- * Checks whether a string is a palindrome by reversing it.
+ * Converts string into char[] and checks palindrome
+ * using two-pointer technique.
  */
 
 public class PalindromeCheckerApp {
 
     /**
-     * Main Method – Entry point of the application
+     * Main Method – Entry point of application
      */
     public static void main(String[] args) {
 
         // Original String
-        String original = "level";
+        String text = "radar";
 
-        // Variable to store reversed string
-        String reversed = "";
+        // Convert String to Character Array
+        char[] characters = text.toCharArray();
 
-        // Reverse string using for loop
-        for (int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i); // String concatenation
+        // Two-pointer variables
+        int start = 0;
+        int end = characters.length - 1;
+
+        // Flag to track palindrome condition
+        boolean isPalindrome = true;
+
+        // Two-pointer comparison
+        while (start < end) {
+
+            // Compare start and end characters
+            if (characters[start] != characters[end]) {
+                isPalindrome = false;
+                break;
+            }
+
+            // Move pointers
+            start++;
+            end--;
         }
 
-        // Compare original and reversed string
-        if (original.equals(reversed)) {
-            System.out.println("The string \"" + original + "\" is a PALINDROME.");
+        // Display Result
+        if (isPalindrome) {
+            System.out.println("The string \"" + text + "\" is a PALINDROME.");
         } else {
-            System.out.println("The string \"" + original + "\" is NOT a PALINDROME.");
+            System.out.println("The string \"" + text + "\" is NOT a PALINDROME.");
         }
-
-        // Display reversed string
-        System.out.println("Reversed String : " + reversed);
     }
 }
