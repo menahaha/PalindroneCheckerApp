@@ -1,33 +1,39 @@
 import java.util.Scanner;
 
 /**
- * UC9: Recursive Palindrome Checker
- * Goal: Check palindrome using recursion
+ * UC10: Case-Insensitive & Space-Ignored Palindrome Checker
+ * Goal: Ignore spaces and case while checking palindrome
  */
-public class UseCase9PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     /**
-     * Recursive method to check palindrome
-     * @param text input string
-     * @param start starting index
-     * @param end ending index
-     * @return true if palindrome
+     * Method to normalize string and check palindrome
+     * @param input user entered string
+     * @return result message
      */
-    public static boolean isPalindrome(String text, int start, int end) {
+    public static String checkPalindrome(String input) {
 
-        // Base Condition:
-        // If pointers cross or become equal → palindrome
-        if (start >= end) {
-            return true;
+        // Step 1: Normalize string
+        // remove spaces & special characters, convert to lowercase
+        String normalized = input
+                .replaceAll("[^a-zA-Z0-9]", "") // remove spaces & symbols
+                .toLowerCase();
+
+        // Step 2: Palindrome check using two-pointer technique
+        int start = 0;
+        int end = normalized.length() - 1;
+
+        while (start < end) {
+
+            if (normalized.charAt(start) != normalized.charAt(end)) {
+                return "Result: The given string is NOT a palindrome.";
+            }
+
+            start++;
+            end--;
         }
 
-        // If mismatch occurs
-        if (text.charAt(start) != text.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call (smaller subproblem)
-        return isPalindrome(text, start + 1, end - 1);
+        return "Result: The given string is a PALINDROME.";
     }
 
     /**
@@ -37,18 +43,14 @@ public class UseCase9PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== UC9: Recursive Palindrome Checker ===");
+        System.out.println("=== UC10: Case-Insensitive & Space-Ignored Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
-        String input = sc.nextLine().toLowerCase();
+        String input = sc.nextLine();
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        String result = checkPalindrome(input);
 
-        if (result) {
-            System.out.println("Result: The given string is a PALINDROME.");
-        } else {
-            System.out.println("Result: The given string is NOT a palindrome.");
-        }
+        System.out.println(result);
 
         sc.close();
     }
