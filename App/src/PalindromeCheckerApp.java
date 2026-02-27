@@ -1,49 +1,69 @@
-/**
- * UC4: Character Array Based Palindrome Check
- * Palindrome Checker App
- * Converts string into char[] and checks palindrome
- * using two-pointer technique.
- */
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.Scanner;
 
+/**
+ * UC6: Queue + Stack Based Palindrome Checker
+ * Goal: Demonstrate FIFO vs LIFO using Queue and Stack
+ */
 public class PalindromeCheckerApp {
 
     /**
-     * Main Method – Entry point of application
+     * Method to check palindrome using Queue and Stack
+     * @param input user entered string
+     * @return result message
+     */
+    public static String checkPalindrome(String input) {
+
+        // Create Queue (FIFO) and Stack (LIFO)
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        // Convert to lowercase for case-insensitive comparison
+        String text = input.toLowerCase();
+
+        // Enqueue and Push characters
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            queue.add(ch);   // ENQUEUE (FIFO)
+            stack.push(ch);  // PUSH (LIFO)
+        }
+
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
+
+            char fromQueue = queue.remove(); // DEQUEUE
+            char fromStack = stack.pop();    // POP
+
+            // If mismatch → not palindrome
+            if (fromQueue != fromStack) {
+                return "Result: The given string is NOT a palindrome.";
+            }
+        }
+
+        // All characters matched
+        return "Result: The given string is a PALINDROME.";
+    }
+
+    /**
+     * Main Method
      */
     public static void main(String[] args) {
 
-        // Original String
-        String text = "radar";
+        Scanner sc = new Scanner(System.in);
 
-        // Convert String to Character Array
-        char[] characters = text.toCharArray();
+        System.out.println("=== UC6: Queue + Stack Based Palindrome Checker ===");
+        System.out.print("Enter a string: ");
 
-        // Two-pointer variables
-        int start = 0;
-        int end = characters.length - 1;
+        String input = sc.nextLine();
 
-        // Flag to track palindrome condition
-        boolean isPalindrome = true;
+        // Call checker
+        String result = checkPalindrome(input);
 
-        // Two-pointer comparison
-        while (start < end) {
+        // Display result
+        System.out.println(result);
 
-            // Compare start and end characters
-            if (characters[start] != characters[end]) {
-                isPalindrome = false;
-                break;
-            }
-
-            // Move pointers
-            start++;
-            end--;
-        }
-
-        // Display Result
-        if (isPalindrome) {
-            System.out.println("The string \"" + text + "\" is a PALINDROME.");
-        } else {
-            System.out.println("The string \"" + text + "\" is NOT a PALINDROME.");
-        }
+        sc.close();
     }
 }
