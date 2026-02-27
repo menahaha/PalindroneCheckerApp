@@ -1,48 +1,44 @@
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 import java.util.Scanner;
 
 /**
- * UC6: Queue + Stack Based Palindrome Checker
- * Goal: Demonstrate FIFO vs LIFO using Queue and Stack
+ * UC7: Deque-Based Optimized Palindrome Checker
+ * Goal: Compare front and rear elements using Deque
  */
 public class PalindromeCheckerApp {
 
     /**
-     * Method to check palindrome using Queue and Stack
+     * Method to check palindrome using Deque
      * @param input user entered string
      * @return result message
      */
     public static String checkPalindrome(String input) {
 
-        // Create Queue (FIFO) and Stack (LIFO)
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Convert to lowercase for case-insensitive comparison
+        // Convert to lowercase for case-insensitive checking
         String text = input.toLowerCase();
 
-        // Enqueue and Push characters
+        // Insert characters into deque
         for (int i = 0; i < text.length(); i++) {
-            char ch = text.charAt(i);
-            queue.add(ch);   // ENQUEUE (FIFO)
-            stack.push(ch);  // PUSH (LIFO)
+            deque.addLast(text.charAt(i));
         }
 
-        // Compare dequeue vs pop
-        while (!queue.isEmpty()) {
+        // Compare front and rear elements
+        while (deque.size() > 1) {
 
-            char fromQueue = queue.remove(); // DEQUEUE
-            char fromStack = stack.pop();    // POP
+            char front = deque.removeFirst(); // remove from front
+            char rear  = deque.removeLast();  // remove from rear
 
             // If mismatch → not palindrome
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 return "Result: The given string is NOT a palindrome.";
             }
         }
 
-        // All characters matched
+        // All matched
         return "Result: The given string is a PALINDROME.";
     }
 
@@ -53,7 +49,7 @@ public class PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== UC6: Queue + Stack Based Palindrome Checker ===");
+        System.out.println("=== UC7: Deque-Based Optimized Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String input = sc.nextLine();
