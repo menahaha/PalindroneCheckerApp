@@ -4,32 +4,38 @@
  * Displays application details at startup.
  */
 
+/**
+ * UC2: Print a Hardcoded Palindrome Result
+ * Palindrome Checker App
+ * Checks whether a hardcoded string is a palindrome.
+ */
+
 public class PalindromeCheckerApp {
 
     /**
      * Main Method – Entry point of the application
-     * JVM starts execution from here
      */
     public static void main(String[] args) {
 
-        // Welcome Message
-        System.out.println("======================================");
-        System.out.println("     PALINDROME CHECKER APPLICATION   ");
-        System.out.println("======================================");
+        // Hardcoded String (String Literal)
+        String word = "madam";
 
-        // Application Details
-        System.out.println("Application Name : Palindrome Checker App");
-        System.out.println("Version          : 1.0");
-        System.out.println("Developer        : Console Based Java App");
+        // Variable to store reversed string
+        String reversed = "";
 
-        // Description
-        System.out.println("\nThis application checks whether a");
-        System.out.println("given string is a palindrome using");
-        System.out.println("different approaches.");
+        // Reverse the string using loop
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
+        }
 
-        // Application Flow Message
-        System.out.println("\nProgram started successfully...");
-        System.out.println("Proceeding to next use case...");
-        System.out.println("======================================");
+        // Conditional Statement (if-else)
+        if (word.equals(reversed)) {
+            System.out.println("The word \"" + word + "\" is a PALINDROME.");
+        } else {
+            System.out.println("The word \"" + word + "\" is NOT a PALINDROME.");
+        }
+
+        // Program Exit Message
+        System.out.println("Program executed successfully.");
     }
 }
