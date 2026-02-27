@@ -1,44 +1,94 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * UC7: Deque-Based Optimized Palindrome Checker
- * Goal: Compare front and rear elements using Deque
+ * UC8: Linked List Based Palindrome Checker
+ * Goal: Check palindrome using singly linked list
  */
 public class PalindromeCheckerApp {
 
+    /* Node class for Singly Linked List */
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
     /**
-     * Method to check palindrome using Deque
-     * @param input user entered string
-     * @return result message
+     * Build linked list from string
+     */
+    public static Node buildList(String input) {
+        Node head = null, tail = null;
+
+        for (char ch : input.toCharArray()) {
+            Node newNode = new Node(ch);
+
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+        return head;
+    }
+
+    /**
+     * Reverse a linked list
+     */
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    /**
+     * Check palindrome using linked list
      */
     public static String checkPalindrome(String input) {
 
-        // Create Deque
-        Deque<Character> deque = new LinkedList<>();
-
-        // Convert to lowercase for case-insensitive checking
         String text = input.toLowerCase();
 
-        // Insert characters into deque
-        for (int i = 0; i < text.length(); i++) {
-            deque.addLast(text.charAt(i));
+        // Step 1: Convert string to linked list
+        Node head = buildList(text);
+
+        if (head == null || head.next == null)
+            return "Result: The given string is a PALINDROME.";
+
+        // Step 2: Find middle using fast & slow pointer
+        Node slow = head;
+        Node fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
-        // Compare front and rear elements
-        while (deque.size() > 1) {
+        // Step 3: Reverse second half
+        Node secondHalf = reverse(slow.next);
 
-            char front = deque.removeFirst(); // remove from front
-            char rear  = deque.removeLast();  // remove from rear
+        // Step 4: Compare both halves
+        Node firstHalf = head;
+        Node tempSecond = secondHalf;
 
-            // If mismatch → not palindrome
-            if (front != rear) {
+        while (tempSecond != null) {
+            if (firstHalf.data != tempSecond.data) {
                 return "Result: The given string is NOT a palindrome.";
             }
+            firstHalf = firstHalf.next;
+            tempSecond = tempSecond.next;
         }
 
-        // All matched
         return "Result: The given string is a PALINDROME.";
     }
 
@@ -49,15 +99,13 @@ public class PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== UC7: Deque-Based Optimized Palindrome Checker ===");
+        System.out.println("=== UC8: Linked List Based Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String input = sc.nextLine();
 
-        // Call checker
         String result = checkPalindrome(input);
 
-        // Display result
         System.out.println(result);
 
         sc.close();
