@@ -1,49 +1,63 @@
-/**
- * UC4: Character Array Based Palindrome Check
- * Palindrome Checker App
- * Converts string into char[] and checks palindrome
- * using two-pointer technique.
- */
+import java.util.Scanner;
+import java.util.Stack;
 
+/**
+ * UC5: Stack-Based Palindrome Checker
+ * Goal: Use stack to reverse characters and validate palindrome
+ */
 public class PalindromeCheckerApp {
 
     /**
-     * Main Method – Entry point of application
+     * Method to check whether a string is palindrome using Stack
+     * @param input user entered string
+     * @return result message
+     */
+    public static String checkPalindrome(String input) {
+
+        // Create Stack
+        Stack<Character> stack = new Stack<>();
+
+        // Convert string to lowercase (optional for case-insensitive check)
+        String original = input.toLowerCase();
+
+        // PUSH: insert characters into stack
+        for (int i = 0; i < original.length(); i++) {
+            stack.push(original.charAt(i));
+        }
+
+        // POP and compare
+        String reversed = "";
+
+        while (!stack.isEmpty()) {
+            reversed = reversed + stack.pop();
+        }
+
+        // Validate palindrome
+        if (original.equals(reversed)) {
+            return "Result: The given string is a PALINDROME.";
+        } else {
+            return "Result: The given string is NOT a palindrome.";
+        }
+    }
+
+    /**
+     * Main method
      */
     public static void main(String[] args) {
 
-        // Original String
-        String text = "radar";
+        Scanner sc = new Scanner(System.in);
 
-        // Convert String to Character Array
-        char[] characters = text.toCharArray();
+        System.out.println("=== UC5: Stack-Based Palindrome Checker ===");
+        System.out.print("Enter a string: ");
 
-        // Two-pointer variables
-        int start = 0;
-        int end = characters.length - 1;
+        String input = sc.nextLine();
 
-        // Flag to track palindrome condition
-        boolean isPalindrome = true;
+        // Call palindrome checker
+        String result = checkPalindrome(input);
 
-        // Two-pointer comparison
-        while (start < end) {
+        // Print result
+        System.out.println(result);
 
-            // Compare start and end characters
-            if (characters[start] != characters[end]) {
-                isPalindrome = false;
-                break;
-            }
-
-            // Move pointers
-            start++;
-            end--;
-        }
-
-        // Display Result
-        if (isPalindrome) {
-            System.out.println("The string \"" + text + "\" is a PALINDROME.");
-        } else {
-            System.out.println("The string \"" + text + "\" is NOT a PALINDROME.");
-        }
+        sc.close();
     }
 }
