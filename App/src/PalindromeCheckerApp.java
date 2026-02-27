@@ -1,45 +1,33 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * UC7: Deque-Based Optimized Palindrome Checker
- * Goal: Compare front and rear elements using Deque
+ * UC9: Recursive Palindrome Checker
+ * Goal: Check palindrome using recursion
  */
 public class PalindromeCheckerApp {
 
     /**
-     * Method to check palindrome using Deque
-     * @param input user entered string
-     * @return result message
+     * Recursive method to check palindrome
+     * @param text input string
+     * @param start starting index
+     * @param end ending index
+     * @return true if palindrome
      */
-    public static String checkPalindrome(String input) {
+    public static boolean isPalindrome(String text, int start, int end) {
 
-        // Create Deque
-        Deque<Character> deque = new LinkedList<>();
-
-        // Convert to lowercase for case-insensitive checking
-        String text = input.toLowerCase();
-
-        // Insert characters into deque
-        for (int i = 0; i < text.length(); i++) {
-            deque.addLast(text.charAt(i));
+        // Base Condition:
+        // If pointers cross or become equal → palindrome
+        if (start >= end) {
+            return true;
         }
 
-        // Compare front and rear elements
-        while (deque.size() > 1) {
-
-            char front = deque.removeFirst(); // remove from front
-            char rear  = deque.removeLast();  // remove from rear
-
-            // If mismatch → not palindrome
-            if (front != rear) {
-                return "Result: The given string is NOT a palindrome.";
-            }
+        // If mismatch occurs
+        if (text.charAt(start) != text.charAt(end)) {
+            return false;
         }
 
-        // All matched
-        return "Result: The given string is a PALINDROME.";
+        // Recursive call (smaller subproblem)
+        return isPalindrome(text, start + 1, end - 1);
     }
 
     /**
@@ -49,16 +37,18 @@ public class PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== UC7: Deque-Based Optimized Palindrome Checker ===");
+        System.out.println("=== UC9: Recursive Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
-        String input = sc.nextLine();
+        String input = sc.nextLine().toLowerCase();
 
-        // Call checker
-        String result = checkPalindrome(input);
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
-        // Display result
-        System.out.println(result);
+        if (result) {
+            System.out.println("Result: The given string is a PALINDROME.");
+        } else {
+            System.out.println("Result: The given string is NOT a palindrome.");
+        }
 
         sc.close();
     }
